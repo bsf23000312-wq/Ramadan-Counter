@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ramadan Azkar Counter - Sadia</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Segoe UI;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:white;
+}
+
+.container{
+    max-width:500px;
+    margin:auto;
+    padding:20px;
+}
+
+.heading{
+    text-align:center;
+    background:linear-gradient(90deg,#0f9b0f,#00c9ff);
+    padding:15px;
+    border-radius:15px;
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.counter-box{
+    text-align:center;
+    background:#111;
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:20px;
+}
+
+.counter{
+    font-size:60px;
+    margin:15px;
+    color:#00ffcc;
+}
+
+button{
+    padding:15px 30px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    margin:10px;
+    cursor:pointer;
+}
+
+.countBtn{
+    background:#00c853;
+    color:white;
+}
+
+.resetBtn{
+    background:#d50000;
+    color:white;
+}
+
+select{
+    width:100%;
+    padding:10px;
+    font-size:16px;
+    border-radius:10px;
+    margin-bottom:15px;
+}
+
+.azkar-list{
+    background:#111;
+    padding:15px;
+    border-radius:15px;
+}
+
+.azkar-item{
+    padding:8px;
+    border-bottom:1px solid #333;
+}
+
+.tick{
+    color:#00ffcc;
+    font-weight:bold;
+    margin-left:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="heading">
+Ramadan Azkar Counter<br>Especially for Sadia 🌙
+</div>
+
+<select id="azkarSelect">
+<option>لَا اِلَهَ اِلَّا اللّهُ مُحَمَّدٌ رَّسُول اللّهِ</option>
+<option>سُبْحَانَ اللّٰه</option>
+<option>اَلْحَمْدُ لِلّٰه</option>
+<option>اَللّٰهُ اَكْبَر</option>
+<option>لَا حَوْلَ وَلَا قُوَّةَ اِلّٰا بِاللّٰه</option>
+<option>سُبْحَانَ اللّٰهِ وَبِحَمْدِهِ</option>
+<option>سُبْحَانَ اللّٰهِ الْعَظِيْم</option>
+<option>اَللّٰھُمَّ اِنِّی اَسْئَلُکَ الْفِرْدَوْسَ</option>
+<option>اَللّٰهُمَّ اَجِرْنِیْ مِنَ النَّارِ</option>
+<option>اَسْتَغْفِرُاللّٰهَ وَأَتُوْبُ اِلَيْهِ</option>
+<option>حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيْلُ</option>
+
+<option>اللّٰهُمَّ صَلِّ عَلٰی مُحَمَّد</option>
+<option>اللّٰهُمَّ صَلِّ وَسَلِّم عَلٰی نَبِيِّنَا مُحَمَّد</option>
+<option>صَلَّى اللّٰهُ عَلٰى مُحَمَّد</option>
+
+</select>
+
+<div class="counter-box">
+
+<div class="counter" id="counter">0</div>
+
+<button class="countBtn" onclick="countTasbeeh()">Count +1</button>
+
+<button class="resetBtn" onclick="resetTasbeeh()">Reset</button>
+
+</div>
+
+<div class="azkar-list" id="azkarList">
+
+</div>
+
+</div>
+
+<script>
+
+let counts = {};
+let currentZikr = document.getElementById("azkarSelect").value;
+
+document.getElementById("azkarSelect").onchange = function(){
+    currentZikr = this.value;
+    updateDisplay();
+}
+
+function countTasbeeh(){
+
+    if(!counts[currentZikr])
+        counts[currentZikr] = 0;
+
+    counts[currentZikr]++;
+
+    updateDisplay();
+}
+
+function resetTasbeeh(){
+    counts[currentZikr] = 0;
+    updateDisplay();
+}
+
+function updateDisplay(){
+
+    let count = counts[currentZikr] || 0;
+
+    document.getElementById("counter").innerText = count;
+
+    renderList();
+}
+
+function renderList(){
+
+    let list = document.getElementById("azkarList");
+
+    list.innerHTML = "";
+
+    for(let zikr in counts){
+
+        let tick = counts[zikr] >= 100 ? "✔" : "";
+
+        list.innerHTML += `
+        <div class="azkar-item">
+        ${zikr}
+        <span class="tick">${tick}</span>
+        (${counts[zikr]}/100)
+        </div>`;
+    }
+}
+
+</script>
+
+</body>
+</html>
